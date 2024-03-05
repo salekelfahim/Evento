@@ -89,9 +89,14 @@
             <h1>Evento</h1>
         </a>
         <nav>
-        <a href="{{ route('login') }}">Log in</a>
-        <a href="{{ route('register') }}">Sign Up</a>
-        <a href="{{ route('addEvent') }}">Add Event</a>
+
+            @if(auth()->check())
+            <a href="{{ route('addEvent') }}">Add Event</a>
+            <a href="{{ route('logout') }}">Logout</a>
+            @else
+            <a href="{{ route('login') }}">Log in</a>
+            <a href="{{ route('register') }}">Sign Up</a>
+            @endif
         </nav>
     </header>
 

@@ -33,7 +33,7 @@
         margin-top: 20px;
     }
 
-    .event-details a {
+    .back {
         background-color: #333;
         color: #fff;
         padding: 10px 20px;
@@ -45,7 +45,7 @@
     }
 
     #imgd {
-        width: 60%;
+        width: 80%;
     }
 </style>
 
@@ -59,7 +59,9 @@
         <h6>Location : {{$event->local}} </h6>
         <p>Description: {{$event->description}} </p>
 
-        <a href="/">Back</a>
+        <a class="back" href="/">Reserve</a>
+        <a type="button" class="btn btn-light">Back</a>
+
 </div>
 
 @endsection
