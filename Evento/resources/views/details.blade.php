@@ -60,7 +60,7 @@
         <p>Description: {{$event->description}} </p>
 
         <a class="back" href="/">Reserve</a>
-        <a type="button" class="btn btn-light">Back</a>
+        <a type="button" href="/" class="btn btn-light">Back</a>
 
 </div>
 
