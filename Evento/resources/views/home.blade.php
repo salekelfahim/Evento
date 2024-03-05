@@ -14,27 +14,18 @@
     </div>
     <main>
     <div id="search_result"  class="row hidden-md-up ms-5">
+            @foreach($events as $event)
             <div class="cart">
-                <img id="img" src="images/Wikipedia_Logo_1.0.png" alt="Wiki">
+            <img id="img" src="{{ asset('storage/' . $event->image) }}" alt="Event Image" class="img-fluid">
                 <h3>
-                    
+                    {{$event->title}}
                 </h3>
                 <p>
-                    
+                {{$event->description}}
                 </p>
                 <a href="details">Voir plus</a>
             </div>
-        
-            <div class="cart">
-                <img id="img" src="images/Wikipedia_Logo_1.0.png" alt="Wiki">
-                <h3>
-                    
-                </h3>
-                <p>
-
-                </p>
-                <a href="details">Voir plus</a>
-            </div>
+            @endforeach
         
         <div class="welcome-page">
         <h2 class="welcome-message">Categories</h2>

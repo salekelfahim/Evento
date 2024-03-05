@@ -89,7 +89,9 @@
             <h1>Evento</h1>
         </a>
         <nav>
-
+        <a href="{{ route('login') }}">Log in</a>
+        <a href="{{ route('register') }}">Sign Up</a>
+        <a href="{{ route('addEvent') }}">Add Event</a>
         </nav>
     </header>
 
