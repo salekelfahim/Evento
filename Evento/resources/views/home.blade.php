@@ -23,7 +23,7 @@
                 <p>
                 {{$event->description}}
                 </p>
-                <a href="details">Voir plus</a>
+                <a href="{{ route('details', ['id' => $event->id]) }}">Details</a>
             </div>
             @endforeach
         

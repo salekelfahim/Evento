@@ -51,4 +51,11 @@ class EventController extends Controller
 
         return redirect()->route('home')->with('success', 'Event created successfully!');
     }
+
+    public function details($id)
+    {
+        $event = Event::find($id);
+
+        return view('details', compact('event'));
+    }
 }
