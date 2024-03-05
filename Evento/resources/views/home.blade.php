@@ -10,7 +10,7 @@
     @endif
     <p>Enjoy latest Events</p>
     <div style="width :30%" class="input-group rounded">
-        <input type="search" id="search_title" class="form-control rounded" placeholder="Search" name="titel_s" aria-label="Search" aria-describedby="search-addon" />
+        <input type="search" id="search_title" class="form-control rounded" placeholder="Search" name="title_s" aria-label="Search" aria-describedby="search-addon" />
         <span class="input-group-text border-0" id="search-addon">
             <i class="fas fa-search"></i>
         </span>
@@ -51,5 +51,30 @@
             </div>
         </div>
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var searchTitleInput = document.getElementById("search_title");
+        var searchResultContainer = document.getElementById("search_result");
+
+        searchTitleInput.addEventListener("keyup", function() {
+            var title = searchTitleInput.value;
+
+            $.ajax({
+                type: 'GET',
+                url: '/search/',
+                data: {
+                    title_s: title
+                },
+                success: function(data) {
+                    searchResultContainer.innerHTML = data;
+                },
+                error: function(error) {
+                    console.error("Error during search:", error);
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

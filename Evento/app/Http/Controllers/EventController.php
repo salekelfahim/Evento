@@ -58,4 +58,18 @@ class EventController extends Controller
 
         return view('details', compact('event'));
     }
+
+    public function searchEvents(Request $request)
+    {
+        $keyword = $request->input('title_s');
+        if ($keyword === '') {
+            $events = Event::get();
+        } else {
+
+            $events = Event::where('title', 'like', '%' . $keyword . '%')
+                ->get();
+        }
+
+        return view('search')->with(['events' => $events, 'keyword' => $keyword]);
+    }
 }

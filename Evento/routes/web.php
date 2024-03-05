@@ -33,5 +33,8 @@ Route::post('/addevent', [EventController::class, 'CreateEvent'])->name('event.c
 
 Route::get('/details/{id}', [EventController::class, 'details'])->name('details');
 
+Route::get('/search', [EventController::class, 'searchEvents'])->name('search');
+
+
 
 require __DIR__.'/auth.php';
