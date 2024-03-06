@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class EventController extends Controller
 {
@@ -24,32 +25,38 @@ class EventController extends Controller
 
     public function CreateEvent(Request $request)
     {
-        // $request->validate([
-        //     'title' => 'required|string|max:255',
-        //     'description' => 'required|string',
-        //     'date' => 'required|date',
-        //     'local' => 'required|string',
-        //     'image' => 'required|image|',
-        //     'acceptation' => 'required',
-        //     'category_id' => 'required',
-        // ]);
+        try {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'date' => 'required|date',
+                'local' => 'required|string',
+                'image' => 'required|image',
+                'acceptation' => 'required',
+                'category_id' => 'required',
+            ]);
 
-        $image = $request->file('image')->store('images', 'public');
+            $image = $request->file('image')->store('images', 'public');
             // dd(auth()->id());
-        $event = new Event([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'date' => $request->input('date'),
-            'local' => $request->input('local'),
-            'image' => $image,
-            'acceptation' => $request->input('acceptation'),
-            'user_id' => auth()->id(),
-            'category_id' => $request->input('category'),
-        ]);
+            $event = new Event([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'date' => $request->input('date'),
+                'local' => $request->input('local'),
+                'image' => $image,
+                'acceptation' => $request->input('acceptation'),
+                'user_id' => auth()->id(),
+                'category_id' => $request->input('category'),
+            ]);
 
-        $event->save();
+            $event->save();
 
-        return redirect()->route('home')->with('success', 'Event created successfully!');
+            return redirect()->route('addTicket', ['id' => $event->id]);
+
+        } catch (ValidationException $e) {
+
+            return ['message' => $e->errors()];
+        }
     }
 
     public function details($id)
