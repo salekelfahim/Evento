@@ -67,6 +67,7 @@
             margin: 10px;
             padding: 20px;
             width: 300px;
+            text-align: center;
         }
 
         .cart a {
@@ -77,8 +78,15 @@
             margin-top: 10px;
         }
 
+        .cart a:hover {
+            text-decoration: underline;
+        }
+
         #img {
             width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -90,6 +98,13 @@
         </a>
         <nav>
 
+            @if(auth()->check())
+            <a href="{{ route('addEvent') }}">Add Event</a>
+            <a href="{{ route('logout') }}">Logout</a>
+            @else
+            <a href="{{ route('login') }}">Log in</a>
+            <a href="{{ route('register') }}">Sign Up</a>
+            @endif
         </nav>
     </header>
 
