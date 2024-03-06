@@ -18,27 +18,36 @@ class TicketController extends Controller
 
     public function createTickets(Request $request)
     {
-        try {
-            $request->validate([
-                'nTickets' => 'required|integer|min:1',
-                'price' => 'required|numeric|min:1',
-                'type' => 'required|in:Standard,VIP',
-            ]);
+        $messages = [
+            'nTickets.required' => 'You need to add a Tickets Number.',
+            'nTickets.integer' => 'Tickets Number must be an integer.',
+            'nTickets.min' => 'Tickets Number must be at least 1.',
+            'price.required' => 'You need to add a Price.',
+            'price.numeric' => 'Price must be a number.',
+            'price.min' => 'Price must be at least 1.',
+            'type.required' => 'You need to select a Ticket Type.',
+            'type.in' => 'Invalid Ticket Type. Please choose either Standard or VIP.',
+        ];
 
-            $ticket = new Ticket([
-                'nTickets' => $request->input('nTickets'),
-                'price' => $request->input('price'),
-                'event_id' => $request->input('event_id'),
-                'type' => $request->input('type'),
-            ]);
+        $request->validate([
+            'nTickets' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:1',
+            'type' => 'required|in:Standard,VIP',
+        ], $messages);
 
-            $ticket->save();
+        $ticket = new Ticket([
+            'nTickets' => $request->input('nTickets'),
+            'price' => $request->input('price'),
+            'event_id' => $request->input('event_id'),
+            'type' => $request->input('type'),
+        ]);
 
+        $ticket->save();
+        if ($ticket != NULL) {
             return redirect()->back()->with('success', 'Tickets added successfully! You can Add Another Tickets Type');
+        } else {
 
-        } catch (ValidationException $e) {
-
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->withErrors(['message' => 'Error']);
         }
     }
 }

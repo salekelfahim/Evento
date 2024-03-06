@@ -8,15 +8,6 @@
 </div>
 @endif
 
-@if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
 <div class="welcome-page">
     <h2 class="welcome-message">Add Tickets</h2>
@@ -28,13 +19,19 @@
         @csrf
         <div class="mb-3">
             <label for="form4Example1" class="form-label">Number of Tickets:</label>
-            <input type="number" id="nTickets" name="nTickets" class="form-control" required>
+            <input type="number" id="nTickets" name="nTickets" class="form-control">
+            @error('nTickets')
+            <div class="alert alert-danger">- {{ $message }}</div>
+            @enderror
         </div>
 
 
         <div class="mb-3">
             <label for="form4Example3" class="form-label">Price: (DH)</label>
-            <input type="number" id="price" name="price" class="form-control" required>
+            <input type="number" step="0.01" id="price" name="price" class="form-control">
+            @error('price')
+            <div class="alert alert-danger">- {{ $message }}</div>
+            @enderror
         </div>
 
         <div class="border p-5 mb-4">
@@ -47,6 +44,9 @@
                 <input class="form-check-input" type="radio" value="VIP" name="type" id="type_vip">
                 <label class="form-check-label" for="type_vip">VIP</label>
             </div>
+            @error('type')
+            <div class="alert alert-danger">- {{ $message }}</div>
+            @enderror
         </div>
 
 
