@@ -9,6 +9,12 @@ class Reservation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ticket_id',
+        'user_id',
+        'status',
+    ];
+
     public function tickets()
     {
         return $this->belongsTo(Ticket::class);

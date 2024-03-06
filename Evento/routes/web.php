@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,8 @@ Route::get('/search', [EventController::class, 'searchEvents'])->name('search');
 Route::get('/addticket/{id}', [TicketController::class, 'ShowAddTickets'])->name('addTicket');
 Route::post('/addtickets', [TicketController::class, 'CreateTickets'])->name('tickets.create');
 
+Route::post('/createreservation', [ReservationController::class, 'createReservation'])->name('createReservation');
 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
