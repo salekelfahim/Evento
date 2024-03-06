@@ -15,4 +15,14 @@ class Ticket extends Model
         'type',
         'event_id'
     ];
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
