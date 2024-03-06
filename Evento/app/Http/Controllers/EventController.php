@@ -25,37 +25,49 @@ class EventController extends Controller
 
     public function CreateEvent(Request $request)
     {
-        try {
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'date' => 'required|date',
-                'local' => 'required|string',
-                'image' => 'required|image',
-                'acceptation' => 'required',
-                'category_id' => 'required',
-            ]);
 
-            $image = $request->file('image')->store('images', 'public');
-            // dd(auth()->id());
-            $event = new Event([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'date' => $request->input('date'),
-                'local' => $request->input('local'),
-                'image' => $image,
-                'acceptation' => $request->input('acceptation'),
-                'user_id' => auth()->id(),
-                'category_id' => $request->input('category'),
-            ]);
 
-            $event->save();
+        $messages = [
+            'title.required' => 'You need to add a Title.',
+            'description.required' => 'You need to add a Description.',
+            'date.required' => 'You need to add a Date.',
+            'date.date' => 'Invalid date format.',
+            'local.required' => 'You need to add a Location.',
+            'image.required' => 'You need to upload an Image.',
+            'image.image' => 'Invalid image format.',
+            'description.string' => 'The Description must be a Text.',
+            'category.required' => 'You need to choose a Category.',
+        ];
 
-            return redirect()->route('addTicket', ['id' => $event->id]);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'date' => 'required|date',
+            'local' => 'required|string',
+            'image' => 'required|image',
+            'category' => 'required',
+        ], $messages);
 
-        } catch (ValidationException $e) {
 
-            return ['message' => $e->errors()];
+        $image = $request->file('image')->store('images', 'public');
+        // dd(auth()->id());
+        $event = new Event([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'date' => $request->input('date'),
+            'local' => $request->input('local'),
+            'image' => $image,
+            'acceptation' => $request->input('acceptation'),
+            'user_id' => auth()->id(),
+            'category_id' => $request->input('category'),
+        ]);
+
+        $event->save();
+        if ($event != NULL) {
+            return redirect()->route('addTicket', ['id' => $event->id])->with('success', 'Event added successfully!');
+        } else {
+
+            return redirect()->back()->withErrors(['message' => 'Error']);
         }
     }
 

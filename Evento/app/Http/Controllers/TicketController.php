@@ -34,11 +34,11 @@ class TicketController extends Controller
 
             $ticket->save();
 
-            return redirect()->back()->with('success', 'Tickets added successfully!');
-            
+            return redirect()->back()->with('success', 'Tickets added successfully! You can Add Another Tickets Type');
+
         } catch (ValidationException $e) {
 
-            return ['message' => $e->errors()];
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }
