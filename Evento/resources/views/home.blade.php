@@ -16,7 +16,7 @@
         </span>
     </div>
 </div>
-<main>
+<main class="d-flex flex-column align-items-center">
     <div id="search_result" class="row hidden-md-up ms-5">
         @foreach($events as $event)
         <div class="cart">
@@ -30,51 +30,25 @@
             <a href="{{ route('details', ['id' => $event->id]) }}">Details</a>
         </div>
         @endforeach
-
-        <div class="welcome-page">
-            <h2 class="welcome-message">Categories</h2>
-            <div class="row hidden-md-up mt-4">
-
-
-                <div class="col-md-4 mb-2">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-
-                        </div>
+    </div>
+    <br>
+    <br>
+    <div class="welcome-page">
+        <h2 class="welcome-message">Categories</h2>
+        <div class="row hidden-md-up mt-4">
+            @foreach($categories as $category)
+            <div class="col-md-4 mb-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <a class="text-decoration-none text-dark" href="{{ route('category', ['id' => $category->id]) }}"><h5 class="card-title "> {{$category->name}}</h5></a>
                     </div>
                 </div>
-
-
-
-
             </div>
+            @endforeach
+
         </div>
+    </div>
 </main>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var searchTitleInput = document.getElementById("search_title");
-        var searchResultContainer = document.getElementById("search_result");
-
-        searchTitleInput.addEventListener("keyup", function() {
-            var title = searchTitleInput.value;
-
-            $.ajax({
-                type: 'GET',
-                url: '/search/',
-                data: {
-                    title_s: title
-                },
-                success: function(data) {
-                    searchResultContainer.innerHTML = data;
-                },
-                error: function(error) {
-                    console.error("Error during search:", error);
-                }
-            });
-        });
-    });
-</script>
 
 @endsection
