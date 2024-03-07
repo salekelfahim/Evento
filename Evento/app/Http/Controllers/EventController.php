@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class EventController extends Controller
 {
     public function ShowHome()
     {
-        $events = Event::all();
+        $events = Event::where('status', 'Accepted')->get();
+        $categories = Category::all();
 
-        return view('home', compact('events'));
+        return view('home', compact('events', 'categories'));
     }
 
     public function ShowAdd()
@@ -25,7 +27,6 @@ class EventController extends Controller
 
     public function CreateEvent(Request $request)
     {
-
 
         $messages = [
             'title.required' => 'You need to add a Title.',
@@ -50,7 +51,7 @@ class EventController extends Controller
 
 
         $image = $request->file('image')->store('images', 'public');
-        // dd(auth()->id());
+
         $event = new Event([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -63,6 +64,7 @@ class EventController extends Controller
         ]);
 
         $event->save();
+
         if ($event != NULL) {
             return redirect()->route('addTicket', ['id' => $event->id])->with('success', 'Event added successfully!');
         } else {
@@ -75,7 +77,14 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        return view('details', compact('event'));
+        $tTickets = 0;
+
+        foreach ($event->tickets as $ticket) {
+
+            $tTickets = $tTickets + $ticket->nTickets;
+        }
+
+        return view('details', compact('event', 'tTickets'));
     }
 
     public function searchEvents(Request $request)
@@ -86,9 +95,20 @@ class EventController extends Controller
         } else {
 
             $events = Event::where('title', 'like', '%' . $keyword . '%')
+                ->where('status', 'Accepted')
                 ->get();
         }
 
         return view('search')->with(['events' => $events, 'keyword' => $keyword]);
+    }
+
+    public function category($id)
+    {
+        $category = Category::find($id);
+
+        $events = DB::table('events')->where('category_id', $id)->where('status', 'Accepted')->get();
+
+
+        return view('category', compact('events', 'category'));
     }
 }

@@ -42,6 +42,8 @@ Route::post('/addtickets', [TicketController::class, 'CreateTickets'])->name('ti
 
 Route::post('/createreservation', [ReservationController::class, 'createReservation'])->name('createReservation');
 
+Route::get('/category/{id}', [EventController::class, 'category'])->name('category');
+
 
 
 require __DIR__ . '/auth.php';
