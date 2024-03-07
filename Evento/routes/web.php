@@ -44,6 +44,8 @@ Route::post('/createreservation', [ReservationController::class, 'createReservat
 
 Route::get('/category/{id}', [EventController::class, 'category'])->name('category');
 
+Route::get('/myevents', [EventController::class, 'EventsUser'])->name('myevents');
+
 
 
 require __DIR__ . '/auth.php';

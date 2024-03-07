@@ -17,7 +17,7 @@
     </div>
 </div>
 <main class="d-flex flex-column align-items-center">
-    <div id="search_result" class="row hidden-md-up ms-5">
+    <div id="search_result" class="row hidden-md-up ms-5 gap-4">
         @foreach($events as $event)
         <div class="cart">
             <img id="img" src="{{ asset('storage/' . $event->image) }}" alt="Event Image" class="img-fluid">

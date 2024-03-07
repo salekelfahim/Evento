@@ -19,6 +19,7 @@
 
             @if(auth()->check())
             <a href="{{ route('addEvent') }}">Add Event</a>
+            <a href="{{ route('myevents') }}">My Events</a>
             <a href="{{ route('logout') }}">Logout</a>
             @else
             <a href="{{ route('login') }}">Log in</a>

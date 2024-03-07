@@ -111,4 +111,12 @@ class EventController extends Controller
 
         return view('category', compact('events', 'category'));
     }
+
+    public function EventsUser()
+    {   
+        $user = auth()->id();
+        $events = Event::where('user_id', $user)->get();
+
+        return view('myevents', compact('events'));
+    }
 }
