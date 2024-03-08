@@ -47,6 +47,9 @@ Route::get('/category/{id}', [EventController::class, 'category'])->name('catego
 Route::get('/myevents', [EventController::class, 'EventsUser'])->name('myevents');
 Route::get('/myeventstats/{id}', [EventController::class, 'EventUserStats'])->name('myeventstats');
 
+Route::post('/acceptTicket/{reservation}', [TicketController::class, 'acceptTicket'])->name('acceptTicket');
+Route::post('/refuseTicket/{reservation}', [TicketController::class, 'refuseTicket'])->name('refuseTicket');
+
 
 
 require __DIR__ . '/auth.php';
