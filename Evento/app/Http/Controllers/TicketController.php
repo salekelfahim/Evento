@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Reservation;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -49,5 +50,19 @@ class TicketController extends Controller
 
             return redirect()->back()->withErrors(['message' => 'Error']);
         }
+    }
+
+    public function acceptTicket(Reservation $reservation)
+    {
+        $reservation->update(['status' => 'Accepted']);
+        
+        return redirect()->back();
+    }
+
+    public function refuseTicket(Reservation $reservation)
+    {
+        $reservation->update(['status' => 'Refused']);
+
+        return redirect()->back();
     }
 }

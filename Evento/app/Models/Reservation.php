@@ -15,8 +15,13 @@ class Reservation extends Model
         'status',
     ];
 
-    public function tickets()
+    public function ticket()
     {
         return $this->belongsTo(Ticket::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
