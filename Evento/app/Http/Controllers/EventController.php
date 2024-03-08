@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Reservation;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -77,12 +79,7 @@ class EventController extends Controller
     {
         $event = Event::find($id);
 
-        $tTickets = 0;
-
-        foreach ($event->tickets as $ticket) {
-
-            $tTickets = $tTickets + $ticket->nTickets;
-        }
+        $tTickets = DB::table('tickets')->where('event_id', $id)->sum('nTickets');
 
         return view('details', compact('event', 'tTickets'));
     }
@@ -118,5 +115,15 @@ class EventController extends Controller
         $events = Event::where('user_id', $user)->get();
 
         return view('myevents', compact('events'));
+    }
+
+    public function EventUserStats($id)
+    {
+        $event = Event::find($id);
+        $tickets = Ticket::where('event_id', $id)->get();
+        $tTickets = $tickets->sum('nTickets');
+        
+
+        return view('myeventstats', compact('event', 'tTickets', 'tickets'));
     }
 }

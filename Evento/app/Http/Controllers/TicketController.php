@@ -50,4 +50,5 @@ class TicketController extends Controller
             return redirect()->back()->withErrors(['message' => 'Error']);
         }
     }
+
 }
