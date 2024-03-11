@@ -18,8 +18,11 @@
         <nav>
 
             @if(auth()->check())
+            @if(auth()->user()->role_id === 2)
             <a href="{{ route('addEvent') }}">Add Event</a>
             <a href="{{ route('myevents') }}">My Events</a>
+            @endif
+            <a href="{{ route('myreservations') }}">My Reservations</a>
             <a href="{{ route('logout') }}">Logout</a>
             @else
             <a href="{{ route('login') }}">Log in</a>

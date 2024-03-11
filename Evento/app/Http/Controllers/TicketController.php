@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Reservation;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class TicketController extends Controller
@@ -36,6 +37,15 @@ class TicketController extends Controller
             'type' => 'required|in:Standard,VIP',
         ], $messages);
 
+        $checkTicket = Ticket::where('type', $request->input('type'))
+            ->where('event_id', $request->input('event_id'))
+            ->first();
+
+        if ($checkTicket) {
+            
+            return redirect()->back()->with('error', 'Ticket already exists for this event and type!');
+        }
+
         $ticket = new Ticket([
             'nTickets' => $request->input('nTickets'),
             'price' => $request->input('price'),
@@ -55,13 +65,19 @@ class TicketController extends Controller
     public function acceptTicket(Reservation $reservation)
     {
         $reservation->update(['status' => 'Accepted']);
-        
+
         return redirect()->back();
     }
 
     public function refuseTicket(Reservation $reservation)
     {
         $reservation->update(['status' => 'Refused']);
+
+        $nTickets = DB::table('tickets')->select('nTickets')->where('id', $reservation->ticket->id)->value('nTickets');
+
+        $aTickets = $nTickets + 1;
+
+        DB::table('tickets')->where('id', $reservation->ticket->id)->update(['nTickets' => $aTickets]);
 
         return redirect()->back();
     }

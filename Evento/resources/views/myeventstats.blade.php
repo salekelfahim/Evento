@@ -37,7 +37,11 @@
 
     <div class="stats">
         <h2 class="stats-message">Event Stats</h2>
-        <p>Here You can See All Pending Tickets</p>
+        @if ($event->status === 'In Progress' || $event->status === 'Refused')
+        <h3 style="margin-top: 10%;">No Stats To Show!</h3>
+        <h3>Your Event Isn't Published!</h3>
+        @else
+        <p>Here You can See All Tickets Buyers</p>
         <table class="table">
             <thead>
                 <tr>
@@ -46,7 +50,7 @@
                     <th scope="col">Type</th>
                     <th scope="col">Status</th>
                     <th scope="col">Handle</th>
-                </tr>
+                </tr>   
             </thead>
             <tbody>
                 <?php $i = 0;
@@ -59,6 +63,7 @@
                     <td>{{ $reservation->ticket->type}}</td>
                     <td>{{ $reservation->status}}</td>
                     <td>
+                    @if ($reservation->status === 'In Progress')
                         <form method="POST" action="{{ route('acceptTicket', ['reservation' => $reservation]) }}">
                             @csrf
                             <button type="submit" class="btn btn-success">Accepte</button>
@@ -66,9 +71,12 @@
 
                         <form method="POST" action="{{ route('refuseTicket', ['reservation' => $reservation]) }}">
                             @csrf
+                            <input type="hidden" name="event_id" value="{{ $reservation->ticket->id }}">
                             <button type="submit" class="btn btn-danger">Refuse</button>
                         </form>
-
+                        @else
+                        -
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -76,6 +84,7 @@
 
             </tbody>
         </table>
+        @endif  
     </div>
 
 </div>

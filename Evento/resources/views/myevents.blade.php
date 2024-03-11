@@ -18,6 +18,14 @@
             <p>
                 {{$event->description}}
             </p>
+            <h5>Status: </h5>
+            @if ($event->status === 'Accepted') 
+            <p style="color:green;">•{{$event->status}}</p>
+            @elseif ($event->status === 'Refused')
+            <p style="color:red;">•{{$event->status}}</p>
+            @else
+            <p >•{{$event->status}}</p>
+            @endif
             <a href="{{ route('myeventstats', ['id' => $event->id]) }}">Stats</a>
         </div>
         @endforeach

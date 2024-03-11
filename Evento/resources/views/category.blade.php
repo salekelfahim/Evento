@@ -22,8 +22,8 @@
         </div>
         @endforeach
         @else
-        <div class="text-center">
-        <h2 class="welcome-message">No Events in This Category!</h2>
+        <div style="margin-bottom: 37%;" class="text-center">
+        <h2 style="margin-bottom: 37%;" class="welcome-message">No Events in This Category!</h2>
         </div>
         @endif
         </div>

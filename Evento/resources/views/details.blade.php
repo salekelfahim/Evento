@@ -10,6 +10,12 @@
 </div>
 @endif
 
+@if(session('error'))
+<div class="alert alert-danger" id="alert">
+    {{ session('error') }}
+</div>
+@endif
+
 <div class="event-details">
     <img id="imgd" src="{{ asset('storage/' . $event->image) }}" alt="Event Image">
     <h1>Title: {{$event->title}}</h1>

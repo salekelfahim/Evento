@@ -35,6 +35,7 @@ class EventController extends Controller
             'description.required' => 'You need to add a Description.',
             'date.required' => 'You need to add a Date.',
             'date.date' => 'Invalid date format.',
+            'date.after:now' => 'The date must be in the future.',
             'local.required' => 'You need to add a Location.',
             'image.required' => 'You need to upload an Image.',
             'image.image' => 'Invalid image format.',
@@ -45,7 +46,7 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'date' => 'required|date',
+            'date' => 'required|date|after:now',
             'local' => 'required|string',
             'image' => 'required|image',
             'category' => 'required',
@@ -125,5 +126,28 @@ class EventController extends Controller
         
 
         return view('myeventstats', compact('event', 'tTickets', 'tickets'));
+    }
+
+    public function ShowEventsAdmin()
+    {
+        $events = Event::where('status', 'In Progress')->get();
+
+        return view('events', compact('events'));
+    }
+
+    public function ApproveEvent($id)
+    {
+        $event = Event::where('id', $id);
+        $event->update(['status' => 'Accepted']);
+
+        return redirect()->back()->with('success', 'Event Accepted successfully!');
+    }
+
+    public function RefuseEvent($id)
+    {
+        $event = Event::where('id', $id);
+        $event->update(['status' => 'Refused']);
+
+        return redirect()->back()->with('success', 'Event Refused successfully!');
     }
 }

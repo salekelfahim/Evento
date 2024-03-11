@@ -7,7 +7,11 @@
     {{ session('success') }}
 </div>
 @endif
-
+@if(session('error'))
+<div class="alert alert-danger" id="alert">
+    {{ session('error') }}
+</div>
+@endif
 
 <div class="welcome-page">
     <h2 class="welcome-message">Add Tickets</h2>
